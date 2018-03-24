@@ -18,6 +18,15 @@ include("connexion_bdd.php");
     <title>Titre du site</title>
 </head>
 <body>
-    <?php echo " affichage des données" ?>
+    <?php
+    
+    $auteurs = $bdd->query('SELECT nomAuteur, prenomAuteur FROM AUTEUR');
+    $donnees = $auteurs->fetchAll();
+
+    foreach ($donnees as $auteur){
+	echo $auteur['prenomAuteur'].", ".$auteur['nomAuteur']."<br>";
+    }
+    
+    echo " affichage des données" ?>
 </body>
 </html>
