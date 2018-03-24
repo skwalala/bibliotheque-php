@@ -1,0 +1,108 @@
+DROP TABLE IF EXISTS EMPRUNT;
+DROP TABLE IF EXISTS EXEMPLAIRE;
+DROP TABLE IF EXISTS OEUVRE;
+DROP TABLE IF EXISTS AUTEUR;
+DROP TABLE IF EXISTS ADHERENT;
+
+CREATE TABLE IF NOT EXISTS ADHERENT (
+	idAdherent int(10) AUTO_INCREMENT,
+	nomAdherent varchar(20),
+	adresse varchar(20),
+	datePaiement date,
+	PRIMARY KEY (idAdherent)
+	);
+
+CREATE TABLE IF NOT EXISTS AUTEUR (
+	idAuteur int(10) AUTO_INCREMENT,
+	nomAuteur varchar(20),
+	prenomAuteur varchar(20),
+	PRIMARY KEY (idAuteur)
+	);
+
+CREATE TABLE IF NOT EXISTS OEUVRE (
+	noOeuvre int(10) AUTO_INCREMENT,
+	titre varchar(20),
+	dateParution date,
+	idAuteur int(10),
+	PRIMARY KEY (noOeuvre)
+	, CONSTRAINT fk_OEUVRE_AUTEUR FOREIGN KEY (idAuteur) REFERENCES AUTEUR(idAuteur)
+	);
+
+CREATE TABLE IF NOT EXISTS EXEMPLAIRE (
+	noExemplaire int(10) AUTO_INCREMENT,
+	etat varchar(20),
+	dateAchat date,
+	prix float(8,2),
+	noOeuvre int(10),
+	PRIMARY KEY (noExemplaire)
+	, CONSTRAINT fk_EXEMPLAIRE_OEUVRE FOREIGN KEY (noOeuvre) REFERENCES OEUVRE(noOeuvre)
+	);
+
+CREATE TABLE IF NOT EXISTS EMPRUNT (
+	idAdherent int(10),
+	noExemplaire int(10),
+	dateEmprunt date,
+	dateRendu date,
+	PRIMARY KEY (idAdherent, noExemplaire, dateEmprunt)
+	, CONSTRAINT fk_EMPRUNT_ADHERENT FOREIGN KEY (idAdherent) REFERENCES ADHERENT(idAdherent)
+	, CONSTRAINT fk_EMPRUNT_EXEMPLAIRE FOREIGN KEY (noExemplaire) REFERENCES EXEMPLAIRE(noExemplaire)
+	);
+
+LOAD DATA LOCAL INFILE 'ADHERENT.csv' INTO TABLE ADHERENT 
+FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'AUTEUR.csv' INTO TABLE AUTEUR 
+FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'OEUVRE.csv' INTO TABLE OEUVRE 
+FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'EXEMPLAIRE.csv' INTO TABLE EXEMPLAIRE 
+FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'EMPRUNT.csv' INTO TABLE EMPRUNT 
+FIELDS TERMINATED BY ',';
+
+SELECT nomAuteur, prenomAuteur, AUTEUR.idAuteur, COUNT(DISTINCT OEUVRE.noOeuvre) AS nbreOeuvre 
+FROM AUTEUR
+INNER JOIN OEUVRE ON OEUVRE.idAuteur = AUTEUR.idAuteur
+GROUP BY nomAuteur, prenomAuteur, AUTEUR.idAuteur 
+ORDER BY nomAuteur;
+
+SELECT nomAuteur, prenomAuteur, AUTEUR.idAuteur, COUNT(DISTINCT OEUVRE.noOeuvre) AS nbreOeuvre 
+FROM OEUVRE
+RIGHT JOIN AUTEUR ON AUTEUR.idAuteur = OEUVRE.idAuteur
+GROUP BY nomAuteur, prenomAuteur, AUTEUR.idAuteur 
+ORDER BY nomAuteur;
+
+SELECT nomAuteur, titre, OEUVRE.noOeuvre, COALESCE(OEUVRE.dateParution, OEUVRE.dateParution, '') AS dateParution, 
+COUNT(EXEMPLAIRE.noExemplaire) AS nbExemplaire
+FROM OEUVRE
+INNER JOIN AUTEUR ON AUTEUR.idAuteur = OEUVRE.idAuteur
+INNER JOIN EXEMPLAIRE ON EXEMPLAIRE.noOeuvre = OEUVRE.noOeuvre 
+GROUP BY OEUVRE.noOeuvre
+ORDER BY AUTEUR.nomAuteur ASC, OEUVRE.titre ASC;
+
+SELECT nomAuteur, titre, OEUVRE.noOeuvre, COALESCE(OEUVRE.dateParution, OEUVRE.dateParution, '') AS dateParution, 
+COUNT(EXEMPLAIRE.noExemplaire) AS nbExemplaire
+FROM OEUVRE
+INNER JOIN AUTEUR ON AUTEUR.idAuteur = OEUVRE.idAuteur
+LEFT JOIN EXEMPLAIRE ON EXEMPLAIRE.noOeuvre = OEUVRE.noOeuvre 
+GROUP BY OEUVRE.noOeuvre
+ORDER BY AUTEUR.nomAuteur ASC, OEUVRE.titre ASC;
+
+SELECT COUNT(OEUVRE.noOeuvre) AS NbreExemplaire, AUTEUR.nomAuteur
+FROM OEUVRE
+RIGHT JOIN AUTEUR ON AUTEUR.idAuteur = OEUVRE.idAuteur
+GROUP BY AUTEUR.nomAuteur
+HAVING NbreExemplaire = 0
+ORDER BY AUTEUR.nomAuteur;
+
+SELECT AUTEUR.nomAuteur
+FROM AUTEUR
+WHERE AUTEUR.idAuteur NOT IN (
+	SELECT OEUVRE.idAuteur
+	FROM OEUVRE
+	)
+;
+
+SELECT DISTINCT AUTEUR.nomAuteur
+FROM AUTEUR
+LEFT JOIN OEUVRE ON AUTEUR.idAuteur = OEUVRE.idAuteur
+WHERE nomOeuvre is NULL;
