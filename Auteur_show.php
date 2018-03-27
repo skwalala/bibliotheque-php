@@ -40,7 +40,7 @@ include("v_head.php");
 	<tbody>
     <?php
     
-    $auteurs = $bdd->query('SELECT idAuteur, nomAuteur, prenomAuteur, count(noOeuvre) as count 
+    $auteurs = $bdd->query('SELECT AUTEUR.idAuteur, nomAuteur, prenomAuteur, count(noOeuvre) as count 
     FROM AUTEUR 
     LEFT JOIN OEUVRE 
     ON AUTEUR.idAuteur=OEUVRE.idAuteur 
