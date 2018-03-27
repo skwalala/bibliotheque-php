@@ -2,6 +2,7 @@
 // connexion à la base de données : 
 // création d'une instance d'un objet PDO de nom $bdd
 include("connexion_bdd.php");
+include("v_head.php");
 // traitement :
 // test si on soumet un formulaire ou pas
 // test si il y a des paramètres dans L’URL
@@ -18,15 +19,42 @@ include("connexion_bdd.php");
     <title>Titre du site</title>
 </head>
 <body>
+<table class="tableau-auteur">
+	<thead>
+		<td>
+			nom
+		</td>
+		<td>
+			prenom
+		</td>
+		<td>
+			nombre d'oeuvres
+		</td>
+		<td>
+			opérations
+		</td>
+
+
+
+	</thead>
+	<tbody>
     <?php
     
-    $auteurs = $bdd->query('SELECT nomAuteur, prenomAuteur FROM AUTEUR');
+    $auteurs = $bdd->query('SELECT idAuteur, nomAuteur, prenomAuteur, count(noOeuvre) as count 
+    FROM AUTEUR 
+    LEFT JOIN OEUVRE 
+    ON AUTEUR.idAuteur=OEUVRE.idAuteur 
+    GROUP by AUTEUR.idAuteur 
+    ORDER BY nomAuteur;');
     $donnees = $auteurs->fetchAll();
 
     foreach ($donnees as $auteur){
-	echo $auteur['prenomAuteur'].", ".$auteur['nomAuteur']."<br>";
+    	echo "<tr>";
+	echo "<td>".$auteur['nomAuteur']."</td><td>".$auteur['prenomAuteur']."</td><td>".$auteur['count']."</td><td><a href='Autheur_edit.php'>modifier</a> <a href='Autheur_delete.php'>supprimer</a></td>";
+	echo "</tr>";
     }
-    
-    echo " affichage des données" ?>
+    ?>
+    	</tbody>
+</table>   
 </body>
 </html>

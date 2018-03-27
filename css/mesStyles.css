@@ -107,9 +107,21 @@ input[type=radio]{
     width: auto;
 }
 
-}
+
 .alert {
     display: block;
     color :red;
     margin: 5px;
 }
+table.tableau-auteur{
+    width 40%;
+    border:solid  1px black;
+    border-collapse:collapse;
+    text-align:center;
+    /*  margin-left:auto;
+        margin-right:auto;*/
+    margin-bottom:2cm;
+}
+
+table.tableau-auteur td{border:solid black 1px;}
+

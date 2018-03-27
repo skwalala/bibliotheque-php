@@ -13,5 +13,5 @@ $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_ASSOC); 
 ?> 
 <?php 
-var_dump($bdd); 
+//var_dump($bdd); 
 ?>
