@@ -113,7 +113,7 @@ input[type=radio]{
     color :red;
     margin: 5px;
 }
-table.tableau-auteur{
+table.tableau-auteur, table.tableau-adherent{
     width 40%;
     border:solid  1px black;
     border-collapse:collapse;
@@ -123,5 +123,5 @@ table.tableau-auteur{
     margin-bottom:2cm;
 }
 
-table.tableau-auteur td{border:solid black 1px;}
+table.tableau-auteur td, table.tableau-adherent td{border:solid black 1px;}
 
