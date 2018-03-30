@@ -125,3 +125,6 @@ table.tableau-auteur, table.tableau-adherent{
 
 table.tableau-auteur td, table.tableau-adherent td{border:solid black 1px;}
 
+body{
+	padding-top:70px;
+	}
