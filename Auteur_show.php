@@ -2,7 +2,7 @@
 // connexion à la base de données : 
 // création d'une instance d'un objet PDO de nom $bdd
 include("connexion_bdd.php");
-include("v_head.php");
+include("index.php");
 // traitement :
 // test si on soumet un formulaire ou pas
 // test si il y a des paramètres dans L’URL
@@ -13,12 +13,7 @@ include("v_head.php");
 // affichage de la vue
 ?>
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Titre du site</title>
-</head>
-<body>
+<a href="Auteur_add.php">ajouter un auteur</a>
 <table class="tableau-auteur">
 	<thead>
 		<td>
@@ -50,7 +45,7 @@ include("v_head.php");
 
     foreach ($donnees as $auteur){
     	echo "<tr>";
-	echo "<td>".$auteur['nomAuteur']."</td><td>".$auteur['prenomAuteur']."</td><td>".$auteur['count']."</td><td><a href='Autheur_edit.php'>modifier</a> <a href='Autheur_delete.php'>supprimer</a></td>";
+	echo "<td>".$auteur['nomAuteur']."</td><td>".$auteur['prenomAuteur']."</td><td>".$auteur['count']."</td><td><a href='Auteur_edit.php?auteur=".$auteur['idAuteur']."'>modifier</a> <a href='Auteur_delete.php?auteur=".$auteur['idAuteur']."'>supprimer</a></td>";
 	echo "</tr>";
     }
     ?>
