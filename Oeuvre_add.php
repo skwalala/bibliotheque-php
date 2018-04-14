@@ -2,7 +2,7 @@
 include("index.php");
 include("connexion_bdd.php");
 
-if(isset($_POST["titre"]) AND isset($_POST["dateParution"]) AND isset([$_POST['idAuteur']))
+if(isset($_POST["titre"]) AND isset($_POST["dateParution"]) AND isset($_POST['idAuteur']))
 {
 
 	$donnees['titre']=$_POST['titre'];
