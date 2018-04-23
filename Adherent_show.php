@@ -2,7 +2,6 @@
 // connexion à la base de données : 
 // création d'une instance d'un objet PDO de nom $bdd
 include("connexion_bdd.php");
-include("v_head.php");
 include("index.php");
 // traitement :
 // test si on soumet un formulaire ou pas
@@ -58,11 +57,21 @@ include("index.php");
     	$donnees_emprunt = $emprunt->fetch();
     	echo "<tr>";
 	echo "<td>".$adherent['nomAdherent']."</td><td>".$adherent['adresse']."</td><td>".$adherent['datePaiement']."</td>";
+	echo "<td>";
 	if ($donnees_emprunt['dates'] > 0) {
-		echo "<td>".$donnees_emprunt['dates']."emprunt(s) en cours</td>";	
-	} else {
-		echo "<td></td>";
+		echo "".$donnees_emprunt['dates']."emprunt(s) en cours";	
 	}
+	$curDate = date_create(date("Y-m-d"));
+	$paiementDate = date_create($adherent['datePaiement']);
+	//$paiementDate = date(strtotime($adherent['datePaiement']));
+	$diff = date_diff($paiementDate, $curDate);
+	//print_r($diff);
+	//$date1an = date('Y-m-d',strtotime('+1 year',$paiementDate));
+	if ( array[days] >= 365) {
+		echo "<br>";
+		echo "paiement en retard";
+	}
+	echo "</td>";
 	echo "<td><a href='Adherent_edit.php'>modifier</a> <a href='Adherent_delete.php'>supprimer</a></td>";
 	echo "</tr>";
     }
