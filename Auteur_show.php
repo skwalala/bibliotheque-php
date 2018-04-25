@@ -45,7 +45,7 @@ include("index.php");
 
     foreach ($donnees as $auteur){
     	echo "<tr>";
-	echo "<td>".$auteur['nomAuteur']."</td><td>".$auteur['prenomAuteur']."</td><td>".$auteur['count']."</td><td><a href='Auteur_edit.php?auteur=".$auteur['idAuteur']."'>modifier</a> <a href='Auteur_delete.php?auteur=".$auteur['idAuteur']."'>supprimer</a></td>";
+	echo "<td>".$auteur['nomAuteur']."</td><td>".$auteur['prenomAuteur']."</td><td>".$auteur['count']."</td><td><a href='Auteur_edit.php?auteur=".$auteur['idAuteur']."&nom=".$auteur['nomAuteur']."&prenom=".$auteur['prenomAuteur']."'>modifier</a> <a href='Auteur_delete.php?auteur=".$auteur['idAuteur']."'>supprimer</a></td>";
 	echo "</tr>";
     }
     ?>
