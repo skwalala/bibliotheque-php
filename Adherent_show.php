@@ -22,7 +22,7 @@ include("index.php");
 <a href='Adherent_add.php'>Ajouter un adherent</a>
 <br>
 <center>Recapitulatif des Adherents</center>
-<table class="tableau-adherent">
+<table class="tableau-adherent" border="2">
 	<thead>
 		<td>
 			<b>nom</b>
@@ -74,15 +74,18 @@ include("index.php");
 		$paiementDateEnRetard = date("Y-m-d", strtotime(date("Y-m-d", strtotime($dateDePaiement)) . " + 1 year"));
 		echo $paiementDateEnRetard;
 	}
-	if ($paiementDate ->diff($curDate)->days <= 30) {
+	if (($paiementDate ->diff($curDate)->days <= 365) && ($paiementDate ->diff($curDate)->days >= 335)) {
 		echo "<br>";
 		echo "paiement à renouveller";
 	}
-	echo "</td>";
-	echo "<td><a href='Adherent_edit.php'>modifier</a> <a href='Adherent_delete.php'>supprimer</a></td>";
-	echo "</tr>";
-    }
-    ?>
+	?>
+	</td>
+	<td>
+		<a href="Adherent_edit.php?nomAdherent=<?= $adherent['nomAdherent'];?>&adresse=<?= htmlentities($adherent['adresse']); ?>&datePaiement=<?= $adherent['datePaiement'];?>&id=<?= $adherent['idAdherent'];?>">modifier</a>
+		<a href="Adherent_delete.php?id=<?= $adherent['idAdherent'];?>">supprimer</a>
+	</td>
+	</tr>
+    <?php } ?>
     	</tbody>
 </table>   
 </body>
