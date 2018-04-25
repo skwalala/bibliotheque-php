@@ -16,25 +16,28 @@ include("index.php");
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Titre du site</title>
+    <title>Liste des adherents</title>
 </head>
 <body>
+<a href='Adherent_add.php'>Ajouter un adherent</a>
+<br>
+<center>Recapitulatif des Adherents</center>
 <table class="tableau-adherent">
 	<thead>
 		<td>
-			nom
+			<b>nom</b>
 		</td>
 		<td>
-			adresse
+			<b>adresse</b>
 		</td>
 		<td>
-			datePaiement
+			<b>datePaiement</b>
 		</td>
 		<td>
-			information
+			<b>information</b>
 		</td>
 		<td>
-			opérations
+			<b>opérations</b>
 		</td>
 
 
@@ -63,13 +66,17 @@ include("index.php");
 	}
 	$curDate = date_create(date("Y-m-d"));
 	$paiementDate = date_create($adherent['datePaiement']);
-	//$paiementDate = date(strtotime($adherent['datePaiement']));
-	$diff = date_diff($paiementDate, $curDate);
-	//print_r($diff);
-	//$date1an = date('Y-m-d',strtotime('+1 year',$paiementDate));
-	if ( array[days] >= 365) {
+
+	if ( $paiementDate ->diff($curDate)->days >= 365) {
 		echo "<br>";
-		echo "paiement en retard";
+		echo "paiement en retard depuis : ";
+		$dateDePaiement = $paiementDate->format('Y-m-d');
+		$paiementDateEnRetard = date("Y-m-d", strtotime(date("Y-m-d", strtotime($dateDePaiement)) . " + 1 year"));
+		echo $paiementDateEnRetard;
+	}
+	if ($paiementDate ->diff($curDate)->days <= 30) {
+		echo "<br>";
+		echo "paiement à renouveller";
 	}
 	echo "</td>";
 	echo "<td><a href='Adherent_edit.php'>modifier</a> <a href='Adherent_delete.php'>supprimer</a></td>";
