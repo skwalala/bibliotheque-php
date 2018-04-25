@@ -4,11 +4,11 @@ include('index.php');
 include("connexion_bdd.php");
 if(isset($_POST["titre"]) AND isset($_POST["dateParution"]) AND isset($_POST["idAuteur"]) AND isset($_POST['id']))
 {
-        $donnees['titre']=$_POST["titre"];
+        $donnees['titre']=htmlentities($_POST["titre"]);
         $donnees['dateParution']=htmlentities($_POST['dateParution']);
         $donnees['idAuteur']=htmlentities($_POST['idAuteur']);
 
-        $ma_requete_SQL="UPDATE OEUVRE SET noOeuvre=, titre, dateParution, idAuteur) VALUES (NULL,'".$donnees['ti    tre']."','".$donnees['dateParution']."','".$donnees['idAuteur']."'WHERE id);";
+        $ma_requete_SQL="UPDATE OEUVRE SET titre='".$donnees['titre']."', dateParution='".$donnees['dateParution']."', idAuteur='".$donnees['idAuteur']."' WHERE noOeuvre=".$_POST['id'].";";
         print_r($ma_requete_SQL);
         $bdd->exec($ma_requete_SQL);
         header("Location: Oeuvre_show.php");
