@@ -14,7 +14,7 @@ $data=$oeuvres->fetchAll();
 if (!empty($data)){
 	echo "il reste des oeuvres à supprimer avant de supprimer cet auteur : <br>";
 	foreach($data as $oeuvre){
-		echo $oeuvre['titre']." : <a href=Oeuvre_delete.php?oeuvre=".$oeuvre['noOeuvre'].">supprimer</a><br>";
+		echo $oeuvre['titre']." : <a href=Oeuvre_delete.php?id=".$oeuvre['noOeuvre'].">supprimer</a><br>";
 	}
 }else{
 $r_delete_auteur="DELETE FROM AUTEUR 
