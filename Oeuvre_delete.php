@@ -16,7 +16,6 @@ if(isset($_GET["id"]) AND is_numeric($_GET["id"]))
 
 	}else{
 		echo "attention, il reste des exemplaires a supprimer <br>";
-		echo "<a href='Exemplaire_show.php'>exemplaires</a><br>";
 		echo "<a href='Oeuvre_show.php'>revenir en arrière</a><br>";
 	}
 }
