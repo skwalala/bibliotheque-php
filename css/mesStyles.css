@@ -114,7 +114,7 @@ input[type=radio]{
     margin: 5px;
 }
 table.tableau-auteur, table.tableau-adherent{
-    width 40%;
+    width: 40%;
     border:solid  1px black;
     border-collapse:collapse;
     text-align:center;
