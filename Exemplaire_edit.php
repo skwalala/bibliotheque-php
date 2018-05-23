@@ -28,7 +28,7 @@ if (!isset($_GET['noExemplaire']) OR !isset($_GET['noOeuvre']) OR !isset($_GET['
     if (isset($donnees['noOeuvre'])) {
         header("Location: Exemplaire_show.php?idOeuvre=" . $donnees['noOeuvre']);
     }else if (isset($_GET['noOeuvre'])){
-        header("Location: Exemplaire_show.php?idOeuvre=".$_GET['noOeuvre']);
+        //header("Location: Exemplaire_show.php?idOeuvre=".$_GET['noOeuvre']);
     }else{
         header("Location: Exemplaire_show.php");
     }

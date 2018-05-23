@@ -21,5 +21,6 @@ $r_delete_auteur="DELETE FROM AUTEUR
 WHERE idAuteur=".$idAuteur.";";
 $bdd->exec($r_delete_auteur);
 echo "auteur supprimé";
+header("Location: Auteur_show.php?");
 }
 }

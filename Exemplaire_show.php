@@ -18,7 +18,7 @@ $data = $exemplaire->fetchAll();
 
 ?>
 
-<a href="Exemplaire_add.php">ajouter un Exemplaire</a>
+<a href="Oeuvre_add.php">ajouter un Exemplaire</a>
 
 <div class="row">
 	<table border="2">

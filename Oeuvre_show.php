@@ -29,7 +29,7 @@ $data = $oeuvres->fetchAll();
 					</td><td>
 						<a href="Exemplaire_show.php?idOeuvre=<?= $value['noOeuvre']; ?>">Gérer Exemplaires</a>
 					</td><td>
-						<a href="Oeuvre_edit.php?idAuteur=<?= $value['idAuteur'];?>&titre=<?= $value['titre'];?>&date=<?= htmlentities($value['dateParution']); ?>&id=<?= $value['noOeuvre'];?>">modifier</a>
+						<a href="Oeuvre_edit.php?idAuteur=<?= $value['idAuteur'];?>&titre='<?= $value['titre'];?>'&date=<?= htmlentities($value['dateParution']); ?>&id=<?= $value['noOeuvre'];?>">modifier</a>
 						<a href="Oeuvre_delete.php?id=<?= $value['noOeuvre'];?>">supprimer</a>
 					</td>
 				</tr>

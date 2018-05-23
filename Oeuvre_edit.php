@@ -34,7 +34,22 @@ $date=$_GET['date'];
 	<label for="dateParution"> date :</label>
 	<input id="dateParution" type="date" name="dateParution" value=<?php echo $date;?>>
 	<label for="idAuteur"> id de l'Auteur :</label>
-	<input id="idAuteur" name="idAuteur" value=<?php echo $idAuteur; ?>>
+      <select name="idAuteur" id="idAuteur" >
+          <?php
+          $cat = $bdd->query("SELECT idAuteur,nomAuteur FROM AUTEUR;");
+          $donnee = $cat->fetchAll();
+
+          foreach ($donnee as $categorie){
+              if (intval($idAuteur) == intval($categorie['idAuteur'])){
+                  $string = "<option value='" . $categorie['idAuteur'] . "' selected>" . $categorie['nomAuteur'];
+                  $string = $string . "</option>";
+              }else {
+                  $string = "<option value='" . $categorie['idAuteur'] . "'>" . $categorie['nomAuteur'];
+                  $string = $string . "</option>";
+              }
+              echo $string;
+          }?>
+      </select>
 	<input id="id" name="id" type="hidden" value=<?php echo $id; ?>>
 	<input id="modifier" type="submit" name="modifier" value="modifier">
   </fieldset>

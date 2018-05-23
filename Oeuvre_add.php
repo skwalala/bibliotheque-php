@@ -23,8 +23,18 @@ if(isset($_POST["titre"]) AND isset($_POST["dateParution"]) AND isset($_POST["id
 	<input id="titre" type ="text" name="titre">
 	<label for="dateParution"> date de parution :</label>
 	<input id="dateParution" type="date" name="dateParution">
-	<label for="idAuteur"> Identifiant de l'Auteur :</label>
-	<input id="idAuteur" type="text" name="idAuteur" value="1">
+	<label for="idAuteur">Auteur :</label><br>
+      <select name="idAuteur" id="idAuteur" >
+          <?php
+          $cat = $bdd->query("SELECT idAuteur,nomAuteur FROM AUTEUR;");
+          $donnee = $cat->fetchAll();
+
+          foreach ($donnee as $categorie){
+              $string="<option value='".$categorie['idAuteur']."'>".$categorie['nomAuteur'];
+              $string=$string."</option>";
+              echo $string;
+          }?>
+      </select>
 	<input id="ajouter" type="submit" name="ajouter" value="ajouter">
   </fieldset>
 </div>
