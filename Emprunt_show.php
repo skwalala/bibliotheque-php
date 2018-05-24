@@ -11,73 +11,74 @@ include("index.php");
 // éventuellement redirection
 
 // affichage de la vue
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Recapitulatifs des Emprunts</title>
-</head>
-<body>
-<center>Recapitulatif des Emprunts</center>
-<table class="tableau-emprunts" border="2">
-	<thead>
-		<td>
-			<b>nom Adherent</b>
-		</td>
-		<td>
-			<b>titre</b>
-		</td>
-		<td>
-			<b>date emprunt</b>
-		</td>
-		<td>
-			<b>dateRendu</b>
-		</td>
-		<td>
-			<b>Exemplaires<b>
-		</td>
-		<td>
-			<b>retard<b>
-		</td>
-		<td>
-			<b>opérations</b>
-		</td>
-	
-	</thead>
-	<tbody>
-    <?php
-    
-    $cemprunt = $bdd->query('SELECT ADHERENT.idAdherent,EXEMPLAIRE.noExemplaire,OEUVRE.titre,nomAdherent,dateEmprunt,dateRendu
-    	, DATEDIFF(curdate(),dateEmprunt) as nbJoursEmprunt
-    	, DATEDIFF(curdate(),DATE_ADD(dateEmprunt, INTERVAL 90 DAY)) as RETARD
-    	, DATE_ADD(dateEmprunt, INTERVAL 90 DAY) as dateRenduTheorique
-    	, IF(CURRENT_DATE()>DATE_ADD(dateEmprunt, INTERVAL 90 DAY),1,0) as flagRetard
-    	, IF(CURRENT_DATE()>DATE_ADD(dateEmprunt, INTERVAL 120 DAY),1,0) as flagPenalite
-    	, IF( ((DATEDIFF(curdate(),DATE_ADD(dateEmprunt, INTERVAL 120 DAY)) * 0.5)<25),
-    		(DATEDIFF(curdate(),DATE_ADD(dateEmprunt, INTERVAL 120 DAY)) * 0.5),25) as dette
-    	FROM ADHERENT
-    	JOIN EMPRUNT ON EMPRUNT.idAdherent=ADHERENT.idAdherent
-    	JOIN EXEMPLAIRE ON EMPRUNT.noExemplaire=EXEMPLAIRE.noExemplaire
-    	JOIN OEUVRE ON EXEMPLAIRE.noOeuvre = OEUVRE.noOeuvre
-    	WHERE dateRendu is NULL
-    	HAVING flagRetard=1;
-    ;');
-    $donnees = $cemprunt->fetchAll();
-    var_dump($donnees);
+  $requete ="SELECT ADHERENT.idAdherent, ADHERENT.nomAdherent, OEUVRE.titre, EMPRUNT.dateEmprunt, EXEMPLAIRE.noExemplaire, EMPRUNT.dateRendu
+             FROM ADHERENT
+             JOIN EMPRUNT ON EMPRUNT.idAdherent = ADHERENT.idAdherent
+             JOIN EXEMPLAIRE ON EXEMPLAIRE.noExemplaire = EMPRUNT.noExemplaire
+             JOIN OEUVRE ON EXEMPLAIRE.noOeuvre = OEUVRE.noOeuvre
+             ";
+  $reponse = $bdd->query($requete);
+  $donnees = $reponse->fetchAll(); ?>
 
-    foreach ($donnees as $emprunt){
-    	echo "<td>".$emprunt['nomAdherent']."</td><td>".$emprunt['titre']."</td><td>".$emprunt['dateEmprunt']."</td><td>".$emprunt['dateRendu']."</td><td>".$emprunt['noExemplaire']."</td>";
-		echo "<td>";
-		echo"</td>";
-		?>
-		<td>
-			<a href="Emprunt_edit.php?idAdherent=<?=$emprunt['idAdherent']; ?>&noExemplaire=<?=$emprunt['noExemplaire']; ?>&dateEmprunt=<?=$emprunt['dateEmprunt']; ?>&dateRendu=<?=$emprunt['dateRendu'];?>">modifier</a>
-			<a href="Emprunt_delete.php?id=<?=$emprunt['idAdherent'];?>">supprimer</a>
-		</td>
-	</tr>
-    <?php } ?>
-</tbody>
-</table>
-</body>
-</html>
+<div class="container" style="margin-top: 100px;">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+        Recapitulatif des Emprunts
+        </div>
+        <div class="card-body">
+          <table class="table" border="2">
+            <?php if ($donnees[0]): ?>
+              <tr>
+                  <td class="text-center" >Nom adherent</th>
+                  <td class="text-center" >Titre</th>
+                  <td class="text-center" >Date d'emprunt</th>
+                  <td class="text-center" >Date rendu</th>
+                  <td class="text-center" >Pénalité</th>
+                  <td class="text-center" >Exemplaire</th>
+                  <td class="text-center" >Opération</th>
+              </tr>
+              <?php foreach ($donnees as $row ): ?>
+                <tr>
+                  <td class="text-center" ><?php echo $row['nomAdherent']; ?></td>
+                  <td class="text-center" ><?php echo $row['titre']; ?></td>
+                  <td class="text-center" ><?= date('d/m/Y',strtotime($row['dateEmprunt'])) ?></td>
+                  <?php
+                  if (isset($row['dateRendu']) and $row['dateRendu'] != '0000-00-00') {
+                  	?>
+                  	<td class="text-center" ><?= $row['dateRendu'] ?></td>
+                  	<?php
+                  } else{
+                  	?><td class="text-center" ></td>
+                  <?php }
+                      if (date('Y-m-d') > date('Y-m-d',strtotime('+2 months',strtotime($row['dateEmprunt'])))){
+                        echo '<td class="text-center">';
+                        $jour = new DateTime(date('Y-m-d'));
+                        $date_limite = new DateTime(date('Y-m-d',strtotime('+2 months',strtotime($row['dateEmprunt']))));
+                        $retard = $date_limite->diff($jour);
+                        $retard = $retard->format('%a');
+                        echo $retard;
+                        } else {
+                          echo '<td class="text-center">';
+                      }
+                      ?>
+                  </td>
+                  <td class="text-center" >n°<?= $row['noExemplaire'] ?></td>
+                  <td class="text-center" >
+                    <a href="Emprunt_delete.php?idAdherent=<?php echo $row['idAdherent'];?>">supprimer</a>
+                    <a href="Emprunt_edit.php?idAdherent=<?php echo $row['idAdherent'];?>&noExemplaire=<?php echo $row['noExemplaire'];?>&dateEmprunt=<?php echo $row['dateEmprunt'];?>&dateRendu=<?php echo $row['dateRendu'];?>">éditer</a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td>Pas d'enregistrements</td>
+              </tr>
+          <?php endif; ?>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
