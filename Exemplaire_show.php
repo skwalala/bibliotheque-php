@@ -16,9 +16,15 @@ if (isset($_GET['idOeuvre'])) {
 $exemplaire = $bdd->query($r_exemplaire);
 $data = $exemplaire->fetchAll();
 
+if(isset($_GET['idOeuvre'])){
+    $noOeuvre=$_GET['idOeuvre'];
+}else{
+    $noOeuvre=null;
+}
+
 ?>
 
-<a href="Oeuvre_add.php">ajouter un Exemplaire</a>
+<a href="Exemplaire_add.php?noOeuvre=<?=$noOeuvre?>">ajouter un Exemplaire</a>
 
 <div class="row">
 	<table border="2">

@@ -24,11 +24,11 @@ if(isset($_POST["noExemplaire"]) AND isset($_POST["noOeuvre"]) AND isset($_POST[
 
 
 
-if (!isset($_GET['noExemplaire']) OR !isset($_GET['noOeuvre']) OR !isset($_GET['etat']) OR !isset($_POST['dateAchat']) OR !isset($_POST['prix'])){
+if (!(isset($_GET['noExemplaire']) AND isset($_GET['noOeuvre']) AND isset($_GET['etat']) AND isset($_GET['dateAchat']) AND isset($_GET['prix']))){
     if (isset($donnees['noOeuvre'])) {
         header("Location: Exemplaire_show.php?idOeuvre=" . $donnees['noOeuvre']);
     }else if (isset($_GET['noOeuvre'])){
-        //header("Location: Exemplaire_show.php?idOeuvre=".$_GET['noOeuvre']);
+        header("Location: Exemplaire_show.php?idOeuvre=".$_GET['noOeuvre']);
     }else{
         header("Location: Exemplaire_show.php");
     }
@@ -43,8 +43,23 @@ if (!isset($_GET['noExemplaire']) OR !isset($_GET['noOeuvre']) OR !isset($_GET['
     <div class="row">
       <fieldset>
         <legend>editer un Exemplaire</legend>
-        <label for="noOeuvre"> noOeuvre :</label>
-        <input id="noOeuvre" type="text" name="noOeuvre" value=<?php echo $noOeuvre;?>>
+        <label for="noOeuvre"> Oeuvre :</label><br>
+          <select name="noOeuvre" id="noOeuvre" >
+              <?php
+              $cat = $bdd->query("SELECT noOeuvre,titre FROM OEUVRE;");
+              $donnee = $cat->fetchAll();
+
+              foreach ($donnee as $categorie){
+                  if (intval($noOeuvre) == intval($categorie['noOeuvre'])){
+                      $string = "<option value='" . $categorie['noOeuvre'] . "' selected>" . $categorie['titre'];
+                      $string = $string . "</option>";
+                  }else {
+                      $string = "<option value='" . $categorie['noOeuvre'] . "'>" . $categorie['titre'];
+                      $string = $string . "</option>";
+                  }
+                  echo $string;
+              }?>
+          </select><br>
         <label for="etat"> etat :</label>
         <input id="etat" type="text" name="etat" value=<?php echo $etat;?>>
         <label for="dateAchat"> date de l'Achat :</label>
