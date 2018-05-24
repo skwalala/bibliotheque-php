@@ -2,6 +2,10 @@
 include('index.php');
 
 include("connexion_bdd.php");
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 if(isset($_POST['idAdherent']) AND isset($_POST['noExemplaire']) AND isset($_POST['dateEmprunt']) AND isset($_POST['dateRendu']))
 {
         $donnees['idAdherent']=htmlentities($_POST['idAdherent']);
@@ -9,7 +13,8 @@ if(isset($_POST['idAdherent']) AND isset($_POST['noExemplaire']) AND isset($_POS
         $donnees['dateEmprunt']=htmlentities($_POST['dateEmprunt']);
         $donnees['dateRendu']=htmlentities($_POST['dateRendu']);
 
-        $ma_requete_SQL="UPDATE EMPRUNT SET idAdherent='".$donnees['idAdherent']."', noExemplaire='".$donnees['noExemplaire']."', dateEmprunt='".$donnees['dateEmprunt']."',dateRendu='".$donnees['dateRendu']."' WHERE idAdherent='".$_POST['idAdherent']."';";
+        $ma_requete_SQL="UPDATE EMPRUNT 
+                         SET idAdherent=".$donnees['idAdherent'].",noExemplaire=".$donnees['noExemplaire'].",dateEmprunt='".$donnees['dateEmprunt']."', dateRendu='".$donnees['dateRendu']."' WHERE id<Adherent=".$_POST['idAdherent']." AND noExemplaire=".$donnees['noExemplaire']." AND dateEmprunt='".$donnees['dateEmprunt']."'";
         print_r($ma_requete_SQL);
         $bdd->exec($ma_requete_SQL);
         header("Location: Emprunt_show.php");
