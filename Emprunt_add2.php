@@ -19,8 +19,6 @@ if(isset($_POST["noExemplaire"]) AND isset($_POST['idAdherent']) AND isset($_POS
     $bdd->exec($ma_requete_SQL);
     header("Location: Emprunt_show.php");
     echo "header";
-}else{
-    echo "not set";
 }
 if (isset($_GET['noExemplaire'])) {
 $noExemplaire=$_GET['noExemplaire'];
