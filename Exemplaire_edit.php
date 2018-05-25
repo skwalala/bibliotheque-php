@@ -22,8 +22,6 @@ if(isset($_POST["noExemplaire"]) AND isset($_POST["noOeuvre"]) AND isset($_POST[
 }
 
 
-
-
 if (!(isset($_GET['noExemplaire']) AND isset($_GET['noOeuvre']) AND isset($_GET['etat']) AND isset($_GET['dateAchat']) AND isset($_GET['prix']))){
     if (isset($donnees['noOeuvre'])) {
         header("Location: Exemplaire_show.php?idOeuvre=" . $donnees['noOeuvre']);

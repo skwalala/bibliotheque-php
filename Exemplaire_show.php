@@ -28,7 +28,7 @@ if(isset($_GET['idOeuvre'])){
 
 <div class="row">
 	<table border="2">
-		<caption>Recapitulatifs des Oeuvres</caption>
+		<caption>Recapitulatifs des Exemplaires</caption>
 			<thead>
 			<tr><th>id exemplaire</th><th>id oeuvre</th><th>etat</th><th>dateAchat</th><th>prix</th><th>emprunt</th><th>operations</th></tr>
 			</thead>

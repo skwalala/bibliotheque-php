@@ -34,10 +34,40 @@ $dateRendu=$_GET['dateRendu'];
 <div class="row">
   <fieldset>
     <legend>Modifier un Emprunt</legend>
-  <label for="idAdherent"> Adherent (id) </label>
-  <input id="idAdherent" type="text" name="idAdherent" value=<?php echo $idAdherent;?>>
-  <label for="noExemplaire"> Exemplaire (no) </label>
-  <input id="noExemplaire" type="text" name="noExemplaire" value=<?php echo $noExemplaire;?>>
+  <label for="idAdherent"> Adherent :</label><br>
+            <select name="idAdherent" id="idAdherent" >
+                <?php
+                $cat = $bdd->query("SELECT idAdherent FROM ADHERENT;");
+                $donnees = $cat->fetchAll();
+
+                foreach ($donnees as $categorie){
+                    if (intval($idAdherent) == intval($categorie['idAdherent'])){
+                        $string = "<option value='" . $categorie['idAdherent'] . "' selected>" . $categorie['idAdherent'];
+                        $string = $string . "</option>";
+                    }else {
+                        $string = "<option value='" . $categorie['idAdherent'] . "'>" . $categorie['idAdherent'];
+                        $string = $string . "</option>";
+                    }
+                    echo $string;
+                }?>
+            </select><br>
+ <label for="idAdherent"> Exemplaire (no) :</label><br>
+            <select name="noExemplaire" id="noExemplaire" >
+                <?php
+                $cat = $bdd->query("SELECT noExemplaire FROM EXEMPLAIRE;");
+                $donnees = $cat->fetchAll();
+
+                foreach ($donnees as $categorie){
+                    if (intval($noExemplaire) == intval($categorie['noExemplaire'])){
+                        $string = "<option value='" . $categorie['noExemplaire'] . "' selected>" . $categorie['noExemplaire'];
+                        $string = $string . "</option>";
+                    }else {
+                        $string = "<option value='" . $categorie['noExemplaire'] . "'>" . $categorie['noExemplaire'];
+                        $string = $string . "</option>";
+                    }
+                    echo $string;
+                }?>
+            </select><br>
   <label for="dateEmprunt"> date Emprunt</label>
   <input id="dateEmprunt" type="date" name="dateEmprunt" value=<?php echo $dateEmprunt; ?>>
   <label for="dateRendu"> date Rendu</label>
