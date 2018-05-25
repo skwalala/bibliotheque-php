@@ -58,7 +58,7 @@ ini_set('display_errors', '1');?>
                   ?>
                   </td>
                   <td class="text-center" >n°<?= $row['noExemplaire'] ?></td>
-                            <td>  <a href="Emprunt_return3.php?idAdherent=<?=$_GET["idAdherent"]?>&noExemplaire=<?=$row['noExemplaire']?>">test</a></td>
+                            <td>  <a href="Emprunt_return3.php?idAdherent=<?=$_GET["idAdherent"]?>&noExemplaire=<?=$row['noExemplaire']?>">rendre</a></td>
 
                 </tr>
               <?php } 
