@@ -66,7 +66,7 @@ include("index.php");
                   </td>
                   <td class="text-center" >n°<?= $row['noExemplaire'] ?></td>
                   <td class="text-center" >
-                    <a href="Emprunt_delete.php?idAdherent=<?php echo $row['idAdherent'];?>">supprimer</a>
+                    <a href="Emprunt_delete.php?idAdherent=<?php echo $row['idAdherent'];?>&noExemplaire=<?php echo $row['noExemplaire'];?>">supprimer</a>
                     <a href="Emprunt_edit.php?idAdherent=<?php echo $row['idAdherent'];?>&noExemplaire=<?php echo $row['noExemplaire'];?>&dateEmprunt=<?php echo $row['dateEmprunt'];?>&dateRendu=<?php echo $row['dateRendu'];?>">éditer</a>
                   </td>
                 </tr>

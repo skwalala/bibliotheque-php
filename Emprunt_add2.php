@@ -1,19 +1,26 @@
 <?php
 include('index.php');
 include("connexion_bdd.php");
-if(isset($_POST["noExemplaire"]) AND isset($_GET['idAdherent']) AND isset($_POST['dateEmprunt'])) {
-	$donnees['idAdherent']=$_GET['idAdherent'];
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+if(isset($_POST["noExemplaire"]) AND isset($_POST['idAdherent']) AND isset($_POST['dateEmprunt'])) {
+	$donnees['idAdherent']=$_POST['idAdherent'];
 	$idAdherent=$donnees['idAdherent'];
     $donnees['noExemplaire'] = $_POST['noExemplaire'];
     $noExemplaire=$donnees['noExemplaire'];
     $donnees['dateEmprunt'] = $_POST['dateEmprunt'];
     $dateEmprunt = $donnees['dateEmprunt'];
 
+    print_r($donnees);
+
     $ma_requete_SQL="INSERT INTO EMPRUNT (idAdherent,noExemplaire,dateEmprunt) VALUES ('".$idAdherent."','".$noExemplaire."','".$dateEmprunt."');";
     print_r(($ma_requete_SQL));
     $bdd->exec($ma_requete_SQL);
-    header("Location: Emprunt.show");
+    header("Location: Emprunt_show.php");
     echo "header";
+}else{
+    echo "not set";
 }
 if (isset($_GET['noExemplaire'])) {
 $noExemplaire=$_GET['noExemplaire'];
@@ -30,6 +37,7 @@ $noExemplaire=$_GET['noExemplaire'];
 	            $donnees = $cat->fetch();
 	            echo $donnees['nomAdherent'];
 	            ?>
+            <input name="idAdherent" id="idAdherent" type="hidden" value="<?=$_GET['idAdherent']?>">
 	            <br>
 	            <a href="Emprunt_add.php"> changer </a><br>
             	<label for="noExemplaire"> Exemplaire d'une Oeuvre :</label>
@@ -50,7 +58,7 @@ $noExemplaire=$_GET['noExemplaire'];
                     }?>
                 </select><br>
                 <label for="dateEmprunt">date Emprunt</label><br>
-                <input type="date" name="dateEmprunt" value="<?php echo date('Y/m/d'); ?>">
+                <input type="date" name="dateEmprunt" id="dateEmprunt" value="<?php echo date('Y/m/d'); ?>">
                 <input id="ajouter" type="submit" name="ajouter" value="ajouter">
        	</fieldset>
     </div>

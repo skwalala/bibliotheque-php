@@ -1,6 +1,10 @@
 <?php
 include('index.php');
 include("connexion_bdd.php");
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 if(isset($_POST['dateRendu'])){
 	$donnees['dateRendu'] = $_POST['dateRendu'];
 
@@ -11,9 +15,8 @@ if(isset($_POST['dateRendu'])){
     	echo "header";
 }
 ?>
-<form action="Emprunt_return2.php" method="post">
+
     <div class="row">
-        <fieldset>
             <legend>Rendre des livres</legend>
 	            <label for="idAdherent"> Adherent :</label>
 	            <?php 
@@ -41,18 +44,18 @@ if(isset($_POST['dateRendu'])){
         </div>
         <div class="card-body">
           <table class="table" border="2">
-            <?php if ($donnees[0]): ?>
+            <?php if (isset($donnees[0]))   : ?>
               <tr>
                   <td class="text-center" >Titre</th>
                   <td class="text-center" >Date d'emprunt</th>
                   <td class="text-center" >nb Jours</th>
                   <td class="text-center" >Exemplaire</th>
-                  <td class="text-center" >Date rendu</th>
                   <td class="text-center" >Rendre</th>
               </tr>
-              <?php foreach ($donnees as $row ): 
-              if ($row['dateRendu'] == null) {
-              }else{?>
+              <?php
+                foreach ($donnees as $row ):
+              if ($row['dateRendu'] == "") {
+              ?>
                 <tr>
                   <td class="text-center" ><?php echo $row['titre']; ?></td>
                   <td class="text-center" ><?= date('d/m/Y',strtotime($row['dateEmprunt'])) ?></td>
@@ -66,8 +69,8 @@ if(isset($_POST['dateRendu'])){
                   ?>
                   </td>
                   <td class="text-center" >n°<?= $row['noExemplaire'] ?></td>
-                  <td><input type="date" name="dateRendu" value="<?php echo date('Y/m/d'); ?>"></td>
-                  <td>  <input id="rendre" type="submit" name="rendre" value="rendre"></td>
+                            <td>  <a href="Emprunt_return3.php?idAdherent=<?=$_GET["idAdherent"]?>&noExemplaire=<?=$row['noExemplaire']?>">test</a></td>
+
                 </tr>
               <?php } 
               endforeach; ?>
@@ -82,3 +85,4 @@ if(isset($_POST['dateRendu'])){
     </div>
   </div>
 </div>
+    </div>
