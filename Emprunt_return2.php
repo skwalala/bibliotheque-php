@@ -54,7 +54,7 @@ if(isset($_POST['dateRendu'])){
               </tr>
               <?php
                 foreach ($donnees as $row ):
-              if ($row['dateRendu'] == "") {
+              if ($row['dateRendu'] == "" or $row['dateRendu'] == "0000-00-00") {
               ?>
                 <tr>
                   <td class="text-center" ><?php echo $row['titre']; ?></td>

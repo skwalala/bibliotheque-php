@@ -14,6 +14,5 @@ if(isset($_GET['idAdherent']) AND isset($_GET['noExemplaire'])){
 		print_r(($ma_requete_SQL));
     	$bdd->exec($ma_requete_SQL);
     	header("Location: Emprunt_return.php");
-
 }
 ?>
