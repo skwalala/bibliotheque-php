@@ -14,7 +14,7 @@ if(isset($_POST['idAdherent']) AND isset($_POST['noExemplaire']) AND isset($_POS
         $donnees['dateRendu']=htmlentities($_POST['dateRendu']);
 
         $ma_requete_SQL="UPDATE EMPRUNT 
-                         SET idAdherent=".$donnees['idAdherent'].",noExemplaire=".$donnees['noExemplaire'].",dateEmprunt='".$donnees['dateEmprunt']."', dateRendu='".$donnees['dateRendu']."' WHERE id<Adherent=".$_POST['idAdherent']." AND noExemplaire=".$donnees['noExemplaire']." AND dateEmprunt='".$donnees['dateEmprunt']."'";
+                         SET idAdherent=".$donnees['idAdherent'].",noExemplaire=".$donnees['noExemplaire'].",dateEmprunt='".$donnees['dateEmprunt']."', dateRendu='".$donnees['dateRendu']."' WHERE idAdherent=".$_POST['idAdherent']." AND noExemplaire=".$donnees['noExemplaire']." AND dateEmprunt='".$donnees['dateEmprunt']."'";
         print_r($ma_requete_SQL);
         $bdd->exec($ma_requete_SQL);
         header("Location: Emprunt_show.php");
