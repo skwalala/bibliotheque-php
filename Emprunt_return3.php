@@ -10,7 +10,7 @@ if(isset($_GET['idAdherent']) AND isset($_GET['noExemplaire'])){
 	$donnees['idAdherent']=$_GET['idAdherent'];
 	$donnees['noExemplaire']=$_GET['noExemplaire'];
 
-	$ma_requete_SQL="UPDATE EMPRUNT SET dateRendu = '".$donnees['dateRendu']."' WHERE idAdherent = '".$donnees["idAdherent"]."' AND idAdherent = '".$donnees["noExemplaire"]."';";
+	$ma_requete_SQL="UPDATE EMPRUNT SET dateRendu = '".$donnees['dateRendu']."' WHERE idAdherent = '".$donnees["idAdherent"]."' AND noExemplaire = '".$donnees["noExemplaire"]."';";
 		print_r(($ma_requete_SQL));
     	$bdd->exec($ma_requete_SQL);
     	header("Location: Emprunt_return.php");

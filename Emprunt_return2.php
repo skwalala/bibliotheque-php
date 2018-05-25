@@ -3,18 +3,7 @@ include('index.php');
 include("connexion_bdd.php");
 
 error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
-if(isset($_POST['dateRendu'])){
-	$donnees['dateRendu'] = $_POST['dateRendu'];
-
-	$ma_requete_SQL="UPDATE EMPRUNT SET dateRendu = '".$donnees['dateRendu']."' WHERE idAdherent = '".$_GET["idAdherent"]."';";
-		print_r(($ma_requete_SQL));
-    	$bdd->exec($ma_requete_SQL);
-    	header("Location: Emprunt_return.php");
-    	echo "header";
-}
-?>
+ini_set('display_errors', '1');?>
 
     <div class="row">
             <legend>Rendre des livres</legend>
